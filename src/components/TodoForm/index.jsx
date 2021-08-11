@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 
-
 const TodoForm = ({addTasks}) => {
-	const [formInputs, setFormInputs] = useState({
+	const initialState = {
 		todo: "",
 		isCompleted: false,
 		id: '',
-	});
+	}
+	const [formInputs, setFormInputs] = useState(initialState);
 	const handleChange = (event) => {
 		setFormInputs((prev) => ({
 			...prev,
@@ -18,12 +18,7 @@ const TodoForm = ({addTasks}) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		addTasks(formInputs)
-		setFormInputs((prev) => ({
-			...prev,
-			...{
-				todo: "",
-			},
-		}))
+		setFormInputs(initialState);
 	}
 
 	return (

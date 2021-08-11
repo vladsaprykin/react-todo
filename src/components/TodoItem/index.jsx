@@ -1,8 +1,5 @@
-import React, {useState} from 'react';
+import React from "react";
 import { BsFillTrashFill } from "react-icons/bs";
-
-
-
 
 const TodoItem = ({task,onToggle,onRemove}) => {
 
@@ -16,7 +13,8 @@ const TodoItem = ({task,onToggle,onRemove}) => {
 				id={task.id}
 			/>
 			<label
-				htmlFor={task.id}></label>
+				htmlFor={task.id}
+			></label>
 			<span className="item__text">{task.todo}</span>
 			<BsFillTrashFill
 				color="#c6c4c6"
