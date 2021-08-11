@@ -12,9 +12,7 @@ const TodoItem = ({task,onToggle,onRemove}) => {
 				onChange={() => onToggle(task)}
 				id={task.id}
 			/>
-			<label
-				htmlFor={task.id}
-			></label>
+			<label htmlFor={task.id} />
 			<span className="item__text">{task.todo}</span>
 			<BsFillTrashFill
 				color="#c6c4c6"

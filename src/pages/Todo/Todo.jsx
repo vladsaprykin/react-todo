@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useMemo} from "react";
 
-
 import "./style.css"
 import TodoForm from "../../components/TodoForm";
 import TodoBar from "../../components/TodoBar";
@@ -11,13 +10,10 @@ const Todo = () => {
 	const [tasks, setTasks] = useState([])
 	const [currentRef, setCurrentRef] = useState(0);
 
-
 	const filteredTasks = useMemo(() => {
 		if (!currentRef) return tasks;
 		return tasks.filter(({isCompleted}) => currentRef === 2 ? isCompleted : !isCompleted);
 	}, [tasks, currentRef]);
-
-
 
 	const handlerAddTasks = (task) => {
 		task.id = new Date().getTime();
@@ -66,7 +62,7 @@ const Todo = () => {
 							tasks={tasks}
 							completeTasks={completeAllTasks}
 							currentRef={currentRef}
-							handleChangeCurrentRef={(f) => setCurrentRef(f)}
+							handlerChangeCurrentRef={(f) => setCurrentRef(f)}
 							clearCompleteTasks={clearCompleteTasks}
 						/>
 					</>
@@ -76,5 +72,4 @@ const Todo = () => {
 		</section>
 	)
 }
-
 export default Todo

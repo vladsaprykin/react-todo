@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useEffect, useMemo, useState} from "react";
 const classNames = require("classnames");
 
-const TodoBar = ({tasks,currentRef,completeTasks,handleChangeCurrentRef,clearCompleteTasks}) => {
-	const notCompleted = (tasks) => {
-		const notCompleted = [...tasks];
-		return notCompleted.filter(item => !item.isCompleted).length
-	}
+const TodoBar = ({tasks,currentRef,completeTasks,handlerChangeCurrentRef,clearCompleteTasks}) => {
+	const countNotCompletedTasks = useMemo(() => {
+		return tasks.filter(item => !item.isCompleted).length
+	}, [tasks]);
 	const btnClassAll = classNames({
 		"block-todo__bar__btn-center_all" : true,
 		"active-btn": currentRef === 0,
@@ -20,14 +19,14 @@ const TodoBar = ({tasks,currentRef,completeTasks,handleChangeCurrentRef,clearCom
 	});
 	return(
 		<div className="block-todo__bar">
-			<div className="block-todo__bar__btn-left" onClick={completeTasks}>{notCompleted(tasks)} tasks left</div>
+			<div className="block-todo__bar__btn-left" onClick={completeTasks}>{countNotCompletedTasks} tasks left</div>
 			<div className="block-todo__bar__btn-center">
-				<div className={btnClassAll} onClick={() => handleChangeCurrentRef(0)}>All</div>
-				<div className={btnClassTodo} onClick={() => handleChangeCurrentRef(1)}>ToDo</div>
-				<div className={btnClassCompleted} onClick={() => handleChangeCurrentRef(2)}>Completed</div>
+				<div className={btnClassAll} onClick={() => handlerChangeCurrentRef(0)}>All</div>
+				<div className={btnClassTodo} onClick={() => handlerChangeCurrentRef(1)}>ToDo</div>
+				<div className={btnClassCompleted} onClick={() => handlerChangeCurrentRef(2)}>Completed</div>
 			</div>
 			<div className="block-todo__bar__btn-right">
-				{(notCompleted(tasks) !== tasks.length) ? <div className="block-todo__bar__btn_clear-completed" onClick={clearCompleteTasks}>Clear completed</div> : ""}
+				{(countNotCompletedTasks !== tasks.length) ? <div className="block-todo__bar__btn_clear-completed" onClick={clearCompleteTasks}>Clear completed</div> : ""}
 			</div>
 		</div>
 	)
