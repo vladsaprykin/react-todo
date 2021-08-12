@@ -6,7 +6,7 @@ import styles from "./.module.css"
 const TodoForm = () => {
 	const dispatch = useDispatch();
 	const formInput = useSelector((state) => state.todo.formInput);
-	const [valueInput,setValueInput] = useState("");
+	const [valueInput, setValueInput] = useState("");
 	const handleChange = (event) => {
 		setValueInput(event.target.value);
 	};

@@ -5,11 +5,13 @@
     width: 450px;
     margin: 0 auto;
 }
-.block-todo__items {
+.todo__items {
     width: 100%;
     margin: 0 auto;
     max-height: 300px;
     z-index: 10;
     overflow-x: hidden;
-    overflow-y: overlay;
+}
+.todo__items::-webkit-scrollbar {
+    width: 0;
 }

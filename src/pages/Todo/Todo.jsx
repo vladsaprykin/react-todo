@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import TodoForm from "../../components/TodoForm";
 import TodoBar from "../../components/TodoBar";
@@ -16,22 +16,22 @@ const Todo = () => {
 		<section className="todo">
 			<div className="_container">
 				<div className={styles["block-todo"]}>
-					<TodoForm />
+					<TodoForm/>
 					{!!tasks.length &&
-						<>
-							<div className={styles["todo__items"]}>
-								{filteredTasks.map((task, index) => {
-									return <TodoItem
-										task={task}
-										index={index}
-										key={task.id}
-									/>
-								})}
-							</div>
-							<TodoBar
-								filter={filter}
-								onChangeFilter={(value) => setFilter(value)}/>
-						</>
+					<>
+						<div className={styles["todo__items"]}>
+							{filteredTasks.map((task, index) => {
+								return <TodoItem
+									task={task}
+									index={index}
+									key={task.id}
+								/>
+							})}
+						</div>
+						<TodoBar
+							filter={filter}
+							onChangeFilter={(value) => setFilter(value)}/>
+					</>
 					}
 				</div>
 			</div>
