@@ -1,25 +1,22 @@
 import React from "react";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../../redux/actions";
+import TodoCustomCheckBox from "../TodoCustomCheckBox";
+import styles from "./.module.css"
 
-const TodoItem = ({task,onToggle,onRemove}) => {
-
-
-	return(
-		<div className="block-todo__item">
-			<input
-				checked={task.isCompleted}
-				type="checkbox"
-				onChange={() => onToggle(task)}
-				id={task.id}
-			/>
-			<label htmlFor={task.id} />
-			<span className="item__text">{task.todo}</span>
+const TodoItem = ({ task }) => {
+	const dispatch = useDispatch();
+	return (
+		<div className={styles["todo__item"]}>
+			<TodoCustomCheckBox task={task}/>
+			<span className={styles["todo__item__text"]}>{task.todo}</span>
 			<BsFillTrashFill
 				color="#c6c4c6"
-				onClick={() => onRemove(task)}
+				onClick={() => dispatch(deleteTask(task))}
 				cursor="pointer"
 			/>
 		</div>
 	)
 }
-export default TodoItem
+export default TodoItem;

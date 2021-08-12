@@ -1,34 +1,44 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useMemo, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { completeAllTasks, clearCompleteTasks } from "../../redux/actions";
+import styles from "./.module.css"
+
 const classNames = require("classnames");
 
-const TodoBar = ({tasks,currentRef,completeTasks,handlerChangeCurrentRef,clearCompleteTasks}) => {
+const TodoBar = ({ filter, onChangeFilter }) => {
+	const btnCenterFilter = [{text: "All", count: 0},{text: "ToDo", count: 1},{text: "Completed", count: 2}];
+	const dispatch = useDispatch();
+	const tasks = useSelector((state) => state.todo.tasks);
 	const countNotCompletedTasks = useMemo(() => {
-		return tasks.filter(item => !item.isCompleted).length
+		return tasks.filter(item => !item.isCompleted).length;
 	}, [tasks]);
-	const btnClassAll = classNames({
-		"block-todo__bar__btn-center_all" : true,
-		"active-btn": currentRef === 0,
-	});
-	const btnClassTodo = classNames({
-		"block-todo__bar__btn-center_todo" : true,
-		"active-btn": currentRef === 1,
-	});
-	const btnClassCompleted = classNames({
-		"block-todo__bar__btn-center_completed" : true,
-		"active-btn": currentRef === 2,
-	});
-	return(
-		<div className="block-todo__bar">
-			<div className="block-todo__bar__btn-left" onClick={completeTasks}>{countNotCompletedTasks} tasks left</div>
-			<div className="block-todo__bar__btn-center">
-				<div className={btnClassAll} onClick={() => handlerChangeCurrentRef(0)}>All</div>
-				<div className={btnClassTodo} onClick={() => handlerChangeCurrentRef(1)}>ToDo</div>
-				<div className={btnClassCompleted} onClick={() => handlerChangeCurrentRef(2)}>Completed</div>
+	return (
+		<div className={styles["todo__bar"]}>
+			<div className={styles["todo__bar__btn-left"]}
+				 onClick={() => dispatch(completeAllTasks())}>{countNotCompletedTasks} tasks left
 			</div>
-			<div className="block-todo__bar__btn-right">
-				{(countNotCompletedTasks !== tasks.length) ? <div className="block-todo__bar__btn_clear-completed" onClick={clearCompleteTasks}>Clear completed</div> : ""}
+			<div className={styles["todo__bar__btn-center"]}>
+				{
+					btnCenterFilter.map(item => {
+						return <div
+							className={
+								classNames(styles["todo__bar__btn-center_filter"], {[styles["active-btn"]]: filter === item.count})}
+								onClick={() => onChangeFilter(item.count)
+								}
+						>{item.text}</div>
+					})
+				}
+			</div>
+			<div className={styles["todo__bar__btn-right"]}>{
+					(countNotCompletedTasks !== tasks.length) && <div
+					className={styles["todo__bar__btn_clear-completed"]}
+					onClick={
+						() => dispatch(clearCompleteTasks())
+						}
+					>Clear completed</div>
+				}
 			</div>
 		</div>
 	)
 }
-export default  TodoBar
+export default TodoBar;

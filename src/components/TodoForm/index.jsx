@@ -1,33 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createTask } from "../../redux/actions";
+import styles from "./.module.css"
 
-const TodoForm = ({addTasks}) => {
-	const initialState = {
-		todo: "",
-		isCompleted: false,
-		id: '',
-	}
-	const [formInputs, setFormInputs] = useState(initialState);
+const TodoForm = () => {
+	const dispatch = useDispatch();
+	const formInput = useSelector((state) => state.todo.formInput);
+	const [valueInput,setValueInput] = useState("");
 	const handleChange = (event) => {
-		setFormInputs((prev) => ({
-			...prev,
-			...{
-				[event.target.name]: event.target.value,
-			},
-		}));
+		setValueInput(event.target.value);
 	};
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		addTasks(formInputs)
-		setFormInputs(initialState);
-	}
-
+		formInput.todo = valueInput;
+		formInput.id = new Date().getTime();
+		dispatch(createTask(formInput));
+		setValueInput("");
+	};
 	return (
-		<form className="block-todo__form" onSubmit={handleSubmit}>
+		<form className={styles["todo__form"]} onSubmit={handleSubmit}>
 			<input
 				type="text"
-				className="form__input"
+				className={styles["form__input"]}
 				name="todo"
-				value={formInputs.todo}
+				value={valueInput}
 				onChange={handleChange}
 				placeholder="Enter your task name here"
 				required
@@ -36,4 +32,4 @@ const TodoForm = ({addTasks}) => {
 		</form>
 	);
 }
-export default TodoForm
+export default TodoForm;
